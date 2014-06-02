@@ -385,11 +385,12 @@ namespace CefSharp
             if (browser != nullptr &&
                 frame != nullptr)
             {
-                // TODO: Don't instantiate this on every request. The problem is that the CefBrowser is not set in our constructor.
+				auto binding = gcnew NetNamedPipeBinding();
+				binding->MaxReceivedMessageSize = SubProcessProxySupport::MaxReceivedMessageSize;                // TODO: Don't instantiate this on every request. The problem is that the CefBrowser is not set in our constructor.
                 auto serviceName = SubProcessProxySupport::GetServiceName(Process::GetCurrentProcess()->Id, _renderClientAdapter->GetCefBrowser()->GetIdentifier());
                 auto channelFactory = gcnew DuplexChannelFactory<ISubProcessProxy^>(
                     this,
-                    gcnew NetNamedPipeBinding(),
+                    binding,
                     gcnew EndpointAddress(serviceName)
                 );
 

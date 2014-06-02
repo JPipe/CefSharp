@@ -27,7 +27,7 @@ namespace CefSharp.Internals
             Kernel32.OutputDebugString("Setting up IJavascriptProxy using service name: " + serviceName);
             host.AddServiceEndpoint(
                 typeof(ISubProcessProxy),
-                new NetNamedPipeBinding(),
+                new NetNamedPipeBinding { MaxReceivedMessageSize = SubProcessProxySupport.MaxReceivedMessageSize },
                 new Uri(serviceName)
             );
 
